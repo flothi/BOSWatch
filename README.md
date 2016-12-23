@@ -15,13 +15,13 @@
 :satellite: Python Script to receive and decode German BOS Information with rtl_fm and multimon-NG :satellite:
 
 #### Notice:
-The intercept of the German BOS radio is **strictly prohibited** and will be prosecuted. the use is **only authorized** personnel permitted.
+The intercept of the German BOS radio is **strictly prohibited** and will be prosecuted. the use is **only permitted to authorized** personnel.
 The software was developed using the Multimon-NG code, a function in the real operation can not be guaranteed.
 
 
 **Please** only use Code from **master**-Branch - thats **the only stable!**
 
-unless you are developer you can use the develop-Branch - may be unstable!
+unless you are developer you can use the develop-Branch - it may be unstable!
 
 ### Features
 ##### Implemented features:
