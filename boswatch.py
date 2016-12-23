@@ -39,18 +39,18 @@ from includes.helper import freqConverter
 try:
 	# With -h or --help you get the Args help
 	parser = argparse.ArgumentParser(prog="boswatch.py",
-									description="BOSWatch is a Python Script to recive and decode german BOS information with rtl_fm and multimon-NG",
-									epilog="More options you can find in the extern config.ini file in the folder /config")
+									description="BOSWatch is a Python script to receive and decode german BOS information with rtl_fm and multimon-NG",
+									epilog="More options can be found in ./config/config.ini or its template ")
 	# parser.add_argument("-c", "--channel", help="BOS Channel you want to listen")
 	parser.add_argument("-f", "--freq", help="Frequency you want to listen", required=True)
-	parser.add_argument("-d", "--device", help="Device you want to use (Check with rtl_test)", required=True)
+	parser.add_argument("-d", "--device", help="Device you want to use (Check with rtl_test)", default=0)
 	parser.add_argument("-e", "--error", help="Frequency-Error of your device in PPM", type=int, default=0)
 	parser.add_argument("-a", "--demod", help="Demodulation functions", choices=['FMS', 'ZVEI', 'POC512', 'POC1200', 'POC2400'], required=True, nargs="+")
 	parser.add_argument("-s", "--squelch", help="Level of squelch", type=int, default=0)
 	parser.add_argument("-g", "--gain", help="Level of gain", type=int, default=100)
 	parser.add_argument("-u", "--usevarlog", help="Use '/var/log/boswatch' for logfiles instead of subdir 'log' in BOSWatch directory", action="store_true")
-	parser.add_argument("-v", "--verbose", help="Shows more information", action="store_true")
-	parser.add_argument("-q", "--quiet", help="Shows no information. Only logfiles", action="store_true")
+	parser.add_argument("-v", "--verbose", help="Show more information", action="store_true")
+	parser.add_argument("-q", "--quiet", help="Show no information. Only use logfiles", action="store_true")
 	# We need this argument for testing (skip instantiate of rtl-fm and multimon-ng):
 	parser.add_argument("-t", "--test", help=argparse.SUPPRESS, action="store_true")
 	args = parser.parse_args()
@@ -59,7 +59,7 @@ except SystemExit:
 	exit(0)
 except:
 	# we couldn't work without arguments -> exit
-	print "ERROR: cannot parsing the arguments"
+	print "ERROR: cannot parse the arguments"
 	exit(1)
 
 
@@ -149,8 +149,8 @@ try:
 
 	except:
 		# It's an error, but we could work without that stuff...
-		logging.error("cannot clear Logfiles")
-		logging.debug("cannot clear Logfiles", exc_info=True)
+		logging.error("cannot clear logfiles")
+		logging.debug("cannot clear logfiles", exc_info=True)
 
 	#
 	# For debug display/log args
@@ -269,8 +269,8 @@ try:
 		pluginLoader.loadPlugins()
 	except:
 		# we couldn't work without plugins -> exit
-		logging.critical("cannot load Plugins")
-		logging.debug("cannot load Plugins", exc_info=True)
+		logging.critical("cannot load plugins")
+		logging.debug("cannot load plugins", exc_info=True)
 		exit(1)
 
 	#
@@ -392,7 +392,7 @@ except:
 	logging.exception("unknown error")
 finally:
 	try:
-		logging.debug("BOSWatch shuting down")
+		logging.debug("BOSWatch shutting down")
 		if multimon_ng and multimon_ng.pid:
 			logging.debug("terminate multimon-ng (%s)", multimon_ng.pid)
 			multimon_ng.terminate()
@@ -410,10 +410,10 @@ finally:
 
 	finally:
 		# Close Logging
-		logging.debug("close Logging")
+		logging.debug("close logging")
 		# Waiting for all Threads to write there logs
 		if globalVars.config.getboolean("BOSWatch","processAlarmAsync") == True:
-			logging.debug("waiting 3s for threads...")
+			logging.debug("waiting 3 secs for threads...")
 			time.sleep(3)
 		logging.info("BOSWatch exit()")
 		logging.shutdown()
