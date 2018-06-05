@@ -65,16 +65,16 @@ def run(typ,freq,data):
 				#
 				logging.debug("send Pushover %s", typ)
 
-			        if data["function"] == '1':
-			                priority = globalVars.config.get("Pushover", "SubA")
-			        elif data["function"] == '2':
-			                priority = globalVars.config.get("Pushover", "SubB")
-			        elif data["function"] == '3':
-			                priority = globalVars.config.get("Pushover", "SubC")
-			        elif data["function"] == '4':
-			                priority = globalVars.config.get("Pushover", "SubD")
-			        else:
-			                priority = 0
+			        alarm = data["ric"] + data["functionChar"]
+                                if alarm in globalVars.config.get("Pushover", "ListePrio2"):
+                                        priority = 2
+                                elif alarm in globalVars.config.get("Pushover","ListePrio1"):
+                                        priority = 1
+                                elif alarm in globalVars.config.get("Pushover","ListePrio0"):
+                                        priority = 0
+                                else:
+                                        priority = -1
+
 
 				conn = httplib.HTTPSConnection("api.pushover.net:443")
 				conn.request("POST", "/1/messages.json",
